@@ -10,6 +10,6 @@ import java.util.Optional;
 
 public interface GalleryRepo extends JpaRepository<Gallery, Long> {
 
-    Optional<Gallery> findByName(String name);
+    Optional<Gallery> findById(Long id);
     Page<Gallery> findAll(Pageable pageable);
 }

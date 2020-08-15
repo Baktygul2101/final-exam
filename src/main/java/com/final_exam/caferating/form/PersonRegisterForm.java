@@ -1,5 +1,6 @@
 package com.final_exam.caferating.form;
 
+import com.final_exam.caferating.exceptions.UniqueEmail;
 import lombok.Getter;
 import lombok.Setter;
 import javax.validation.constraints.*;
@@ -14,6 +15,7 @@ public class PersonRegisterForm {
 
     @NotBlank(message = "Обязательное поле")
     @Email
+    @UniqueEmail
     private String email = "";
 
     @NotBlank(message = "Обязательное поле")
