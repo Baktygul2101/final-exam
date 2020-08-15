@@ -12,4 +12,5 @@ public interface GalleryRepo extends JpaRepository<Gallery, Long> {
 
     Optional<Gallery> findById(Long id);
     Page<Gallery> findAll(Pageable pageable);
+    Page<Gallery> getAllBy(Pageable pageable, String email);
 }
