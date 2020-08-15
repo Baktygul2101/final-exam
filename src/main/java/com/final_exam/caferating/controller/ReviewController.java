@@ -1,9 +1,11 @@
 package com.final_exam.caferating.controller;
 
 import com.final_exam.caferating.form.PlaceRegisterForm;
+import com.final_exam.caferating.form.ReviewRegisterForm;
 import com.final_exam.caferating.service.PersonService;
 import com.final_exam.caferating.service.PlaceService;
 import com.final_exam.caferating.service.PropertiesService;
+import com.final_exam.caferating.service.ReviewService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -20,61 +22,63 @@ import javax.validation.Valid;
 import java.security.Principal;
 
 @AllArgsConstructor
-@RequestMapping("/places")
+@RequestMapping("/reviews")
 @Controller
-public class PlaceController {
+public class ReviewController {
 
     private final PlaceService placeService;
     private final PropertiesService propertiesService;
     private final PersonService personService;
+    private final ReviewService reviewService;
+
 
     @GetMapping
-    public String getPlaces(Model model, Pageable pageable, Principal principal, HttpServletRequest uriBuilder){
+    public String getReviews(Model model, Pageable pageable, Principal principal, HttpServletRequest uriBuilder){
         personService.checkUserPresence(model, principal);
-        PropertiesService.constructPageable(placeService.getAllByPersonEmail(pageable, principal), propertiesService.getDefaultPageSize(), model, uriBuilder.getRequestURI());
-        return "places";
+        PropertiesService.constructPageable(reviewService.getAllByPersonEmail(pageable, principal), propertiesService.getDefaultPageSize(), model, uriBuilder.getRequestURI());
+        return "reviews";
     }
 
-    @GetMapping("/place/{id}")
-    public String getPlace(@PathVariable Long id, Model model, Principal principal){
+    @GetMapping("/review/{id}")
+    public String getReview(@PathVariable Long id, Model model, Principal principal){
         personService.checkUserPresence(model, principal);
-        model.addAttribute("place", placeService.getPlaceById(id));
-        return "place";
+        model.addAttribute("review", reviewService.getById(id));
+        return "review";
     }
 
-    @GetMapping("/add-new-place")
+    @GetMapping("/add-review")
     public String addNewPlace(Model model, Principal principal){
         personService.checkUserPresence(model, principal);
-        return "newPlace";
+        return "review";
     }
 
     @PostMapping
     public String addNewPlace(@Valid PlaceRegisterForm placeRegisterForm, BindingResult validationResult, RedirectAttributes attributes, Principal principal){
         if (validationResult.hasFieldErrors()) {
             attributes.addFlashAttribute("errors", validationResult.getFieldErrors());
-            return "redirect:/places/add-new-place";
+            return "redirect:/reviews/add-review";
         }
         placeService.addNewPlace(placeRegisterForm, principal);
-        return "redirect:/places";
+        return "redirect:/reviews";
     }
 
 
 
-    @GetMapping("/place/{id}/update")
-    public String updatePlace(@PathVariable Long id, Model model, Principal principal){
+    @GetMapping("/review/{id}/update")
+    public String updateReview(@PathVariable Long id, Model model, Principal principal){
         personService.checkUserPresence(model, principal);
-        model.addAttribute("place", placeService.getPlaceById(id));
-        return "updatePlace";
+        model.addAttribute("review", reviewService.getById(id));
+        return "updateReview";
     }
 
-    @PostMapping("/place/{id}/update")
-    public String updatePlace(@PathVariable Long id, @Valid PlaceRegisterForm placeRegisterForm, BindingResult validationResult, RedirectAttributes attributes){
+    @PostMapping("/review/{id}/update")
+    public String updateReview(@PathVariable Long id, @Valid ReviewRegisterForm reviewRegisterForm, BindingResult validationResult, RedirectAttributes attributes){
         if (validationResult.hasFieldErrors()) {
             attributes.addFlashAttribute("errors", validationResult.getFieldErrors());
-            return "redirect:/places/place/{id}/update";
+            return "redirect:/reviews/review/{id}/update";
         }
-        placeService.updatePlaceById(id, placeRegisterForm);
-        return "redirect:/places";
+        reviewService.updateReviewById(id, reviewRegisterForm);
+        return "redirect:/reviews";
     }
 
 }
