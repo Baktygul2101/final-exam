@@ -14,11 +14,13 @@ public class GalleryDTO {
 
     private Long id;
     private String photo;
+    private String name;
 
     public static GalleryDTO from(Gallery position) {
         return builder()
                 .id(position.getId())
                 .photo(position.getPhoto())
+                .name(position.getName())
                 .build();
     }
 }
