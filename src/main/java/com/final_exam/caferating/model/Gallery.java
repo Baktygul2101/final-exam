@@ -21,4 +21,7 @@ public class Gallery {
     @NotBlank(message = "Обязательное поле")
     private String photo;
 
+    @NotBlank(message = "Обязательное поле")
+    private String name;
+
 }

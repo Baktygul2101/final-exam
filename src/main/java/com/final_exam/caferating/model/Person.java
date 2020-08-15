@@ -36,4 +36,10 @@ public class Person {
     @Builder.Default
     private boolean enabled = true;
 
+    @NotBlank
+    @Size(min = 1, max = 128)
+    @Column(length = 128)
+    @Builder.Default
+    private String role = "USER";
+
 }
