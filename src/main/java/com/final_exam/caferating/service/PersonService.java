@@ -11,6 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+
+import java.security.Principal;
 
 @Service
 @AllArgsConstructor
@@ -19,16 +22,15 @@ public class PersonService {
     private final PersonRepo personRepo;
     private final PasswordEncoder encoder;
 
-    public PersonDTO register(PersonRegisterForm form) {
+
+    public void registerPerson(PersonRegisterForm personRegisterForm){
         var user = Person.builder()
-                .name(form.getName())
-                .email(form.getEmail())
-                .password(encoder.encode(form.getPassword()))
+                .name(personRegisterForm.getName())
+                .email(personRegisterForm.getEmail())
+                .password(encoder.encode(personRegisterForm.getPassword()))
                 .build();
         personRepo.save(user);
-        return PersonDTO.from(user);
     }
-
     public PersonDTO getById(Long id){
         Person person = personRepo.findById(id).get();
         return PersonDTO.from(person);
@@ -44,7 +46,13 @@ public class PersonService {
         return personRepo.findAll(pageable).map(PersonDTO::from);
     }
 
-
+    public void checkUserPresence(Model model, Principal principal){
+        if(principal != null){
+            if (personRepo.existsByEmail(principal.getName())){
+                model.addAttribute("person", true);
+            }
+        }
+    }
 
 
 
