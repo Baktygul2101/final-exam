@@ -26,4 +26,7 @@ public class Review {
     private Place place;
 
     private int rating;
+
+    @ManyToOne @JoinColumn(name = "person_id")
+    private Person person;
 }

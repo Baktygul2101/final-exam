@@ -21,7 +21,12 @@ public class Place {
     @NotBlank(message = "Обязательное поле")
     private String name;
 
+    @NotBlank(message = "Обязательное поле")
+    private String description;
 
     @ManyToOne @JoinColumn(name= "gallery_id")
     private Gallery gallery;
+
+    @ManyToOne @JoinColumn(name = "person_id")
+    private Person person;
 }
