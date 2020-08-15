@@ -37,8 +37,8 @@ public class PersonService {
     }
 
     public PersonDTO getByEmail(String email) {
-        var user = personRepo.findByEmail(email)
-                .orElseThrow(PersonNotFoundException::new);
+        var user = personRepo.findByEmail(email);
+              //  .orElseThrow(PersonNotFoundException::new);
         return PersonDTO.from(user);
     }
 

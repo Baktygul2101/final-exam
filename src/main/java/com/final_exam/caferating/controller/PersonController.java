@@ -55,7 +55,7 @@ public class PersonController {
     }
 
     @GetMapping("/profile")
-    public String pageAuthorProfile(Model model, Principal principal) {
+    public String pagePersonProfile(Model model, Principal principal) {
         var user = personService.getByEmail(principal.getName());
         model.addAttribute("dto", user);
         return "profile";
