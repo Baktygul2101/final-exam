@@ -44,6 +44,8 @@
         <a href="/register"> Регистрация </a>
         <a href="/login"> Войти </a>
         <a href="/profile"> Профиль </a>
+        <a href="/places"> Заведения </a>
+
         <form class="flex box-128" action="/logout" method="post">
             <#if _csrf??>
                 <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
