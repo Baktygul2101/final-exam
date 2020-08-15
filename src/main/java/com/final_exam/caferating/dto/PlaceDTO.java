@@ -12,6 +12,7 @@ public class PlaceDTO {
 
     private Long id;
     private String name;
+    private String description;
     private GalleryDTO gallery;
     private PersonDTO person;
 
@@ -19,6 +20,7 @@ public class PlaceDTO {
         return builder()
                 .id(place.getId())
                 .name(place.getName())
+                .description(place.getDescription())
                 .gallery(GalleryDTO.from(place.getGallery()))
                 .person(PersonDTO.from(place.getPerson()))
                 .build();

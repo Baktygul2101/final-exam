@@ -13,7 +13,14 @@ public class PlaceRegisterForm {
     @Pattern(regexp = "^[^\\d]+$", message = "Название должно содержать только буквы : ${validatedValue}")
     private String name = "";
 
+    @NotBlank(message = "Обязательное поле")
+    private String description = "";
+
     @NotNull(message = "Обязательное поле")
     private Long galleryId;
+
+    @NotNull(message = "Обязательное поле")
+    private Long personId;
+
 
 }
