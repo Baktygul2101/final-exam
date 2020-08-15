@@ -45,6 +45,7 @@ public class PersonController {
     public String register(@Valid PersonRegisterForm personRegisterForm,
                           BindingResult validationResult,
                           RedirectAttributes attributes){
+        attributes.addFlashAttribute("dto", personRegisterForm);
         if (validationResult.hasFieldErrors()) {
             attributes.addFlashAttribute("errors", validationResult.getFieldErrors());
             return "redirect:/register";
@@ -53,4 +54,10 @@ public class PersonController {
         return "redirect:/login";
     }
 
+    @GetMapping("/profile")
+    public String pageAuthorProfile(Model model, Principal principal) {
+        var user = personService.getByEmail(principal.getName());
+        model.addAttribute("dto", user);
+        return "profile";
+    }
 }

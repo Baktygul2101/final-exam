@@ -2,6 +2,7 @@ package com.final_exam.caferating.dto;
 
 import com.final_exam.caferating.model.Review;
 import lombok.*;
+import org.springframework.security.core.parameters.P;
 
 @Data
 @ToString
@@ -14,6 +15,7 @@ public class ReviewDTO {
     private String text;
     private PlaceDTO place;
     private int rating;
+    private PersonDTO person;
 
     public static ReviewDTO from(Review review) {
         return builder()
@@ -21,6 +23,7 @@ public class ReviewDTO {
                 .text(review.getText())
                 .place(PlaceDTO.from(review.getPlace()))
                 .rating(review.getRating())
+                .person(PersonDTO.from(review.getPerson()))
                 .build();
     }
 }

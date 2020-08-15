@@ -27,8 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.formLogin()
                 .loginPage("/login")
-                .failureUrl("/login?error=true")
-                .defaultSuccessUrl("/", true);
+                .failureUrl("/login?error=true");
 
         http.logout()
                 .logoutUrl("/logout")
@@ -37,29 +36,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true);
 
         http.authorizeRequests()
-                .antMatchers("/places/**")
+                .antMatchers("/profile")
                 .authenticated();
 
         http.authorizeRequests()
-                .antMatchers("/login", "/register")
-                .anonymous()
                 .anyRequest()
                 .permitAll();
     }
-
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-        String fetchAdminsQuery = "select email, password, enabled"
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        String fetchUsersQuery = "select email, password, enabled"
                 + " from persons"
                 + " where email = ?";
 
-        String fetchRolesQuery = "select email, role" +
-                " from persons" +
-                " where email = ?";
+        String fetchRolesQuery = "select email, role"
+                + " from persons"
+                + " where email = ?";
 
         auth.jdbcAuthentication()
-                .usersByUsernameQuery(fetchAdminsQuery)
+                .usersByUsernameQuery(fetchUsersQuery)
                 .authoritiesByUsernameQuery(fetchRolesQuery)
                 .dataSource(dataSource);
     }

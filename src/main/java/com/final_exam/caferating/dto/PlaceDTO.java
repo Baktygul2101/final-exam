@@ -13,12 +13,14 @@ public class PlaceDTO {
     private Long id;
     private String name;
     private GalleryDTO gallery;
+    private PersonDTO person;
 
     public static PlaceDTO from(Place place) {
         return builder()
                 .id(place.getId())
                 .name(place.getName())
                 .gallery(GalleryDTO.from(place.getGallery()))
+                .person(PersonDTO.from(place.getPerson()))
                 .build();
     }
 }
